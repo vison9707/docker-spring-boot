@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "mychart.fullname" . }}
+  namespace: demo-prod-1
   labels:
     {{- include "mychart.labels" . | nindent 4 }}
 spec:
@@ -25,7 +26,7 @@ spec:
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
+        - name: ecr-secret
       {{- end }}
       serviceAccountName: {{ include "mychart.serviceAccountName" . }}
       securityContext:
@@ -34,7 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          image: 375748082157.dkr.ecr.us-east-2.amazonaws.com/vison9707
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http

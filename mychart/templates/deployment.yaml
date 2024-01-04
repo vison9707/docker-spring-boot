@@ -35,7 +35,7 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: 375748082157.dkr.ecr.us-east-2.amazonaws.com/vison9707:4
+          image: 375748082157.dkr.ecr.us-east-2.amazonaws.com/vison9707:${IMAGE_TAG}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
